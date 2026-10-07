@@ -41,14 +41,86 @@
 
 <button onclick="planeraRutt()">Planera rutt</button>
 <script>
-function planeraRutt() {
+(No subject)
+
+async function planeraRutt() {
 
   const start = document.getElementById("start").value;
 
   const destination = document.getElementById("destination").value;
-alert("Husbilsrutt: 8,5 m lång, 3,20 m hög, 2,40 m bred och 4 250 kg. Husbilsanpassad vägberäkning kopplas in i nästa steg."););
 
-};
+  if (!start || !destination) {
+
+    alert("Fyll i både start och destination.");
+
+    return;
+
+  }
+
+  try {
+
+    const response = await fetch(
+
+      "https://broken-tree-6c60.evaharaldsson54.workers.dev/",
+
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+          start: start,
+
+          destination: destination
+
+        })
+
+      }
+
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      throw new Error(data.error || "Rutten kunde inte beräknas.");
+
+    }
+
+    const summary = data.features[0].properties.summary;
+
+    const km = Math.round(summary.distance / 1000);
+
+    const timmar = Math.floor(summary.duration / 3600);
+
+    const minuter = Math.round((summary.duration % 3600) / 60);
+
+    alert(
+
+      "Husbilsrutten fungerar!\\n\\n" +
+
+      "Avstånd: " + km + " km\\n" +
+
+      "Beräknad körtid: " + timmar + " tim " + minuter + " min"
+
+    );
+
+  } catch (error) {
+
+    alert("Något gick fel: " + error.message);
+
+  }
+
+}
+
+
+
 
 </script>
 <br><br>
