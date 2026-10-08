@@ -29,7 +29,7 @@ fetch(url, {
     start: new URLSearchParams(window.location.search).get("start") || "Hamburg",
     destination: new URLSearchParams(window.location.search).get("destination") || "Andorra La Vella" 
   })
-})
+});
 .then(r => {
   if (!r.ok) throw new Error("Rutten kunde inte hämtas");
   return r.json();
@@ -39,13 +39,13 @@ fetch(url, {
   map.fitBounds(route.getBounds());
   document.getElementById("status").textContent =
     "Rutten Kiel–Andorra visas på kartan.";
-})
+});
 .catch(err => {
   document.getElementById("status").textContent =
     "Kunde inte visa rutten: " + err.message;
 });
 map.locate({setView: false});
-  map.on("locationfound", function(e) {L.circleMarker(e.latlng, {radius: 8, color: "blue", fillcolor: "blue", fillOpacity: 1}).addTo(map).bindPopup("Här är vi");});
+ 
 </script>
   
 </body>
