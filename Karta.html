@@ -39,7 +39,7 @@ fetch(url, {
   map.fitBounds(route.getBounds());
   document.getElementById("status").textContent =
     "Rutten Kiel–Andorra visas på kartan.";
-});
+})
 .catch(err => {
   document.getElementById("status").textContent =
     "Kunde inte visa rutten: " + err.message;
