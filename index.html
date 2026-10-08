@@ -83,7 +83,7 @@ async function planeraRutt() {
       throw new Error(data.error || "Rutten kunde inte beräknas.");
 
     }
-
+document.querySelector("iframe").src = "Karta.html?start="+ encodeURIComponent(start)+ "&destination=" + encodeURIComponent(destination);
     const summary = data.features[0].properties.summary;
 
     const km = Math.round(summary.distance / 1000);
