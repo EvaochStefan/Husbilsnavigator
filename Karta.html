@@ -43,7 +43,10 @@ fetch(url, {
 .catch(err => {
   document.getElementById("status").textContent =
     "Kunde inte visa rutten: " + err.message;
-});
+}
+map.locate({setView: false});
+  map.on("locationfound", function(e) {L.circleMarker(e.latlng, {radius: 8, color: "blue", fillcolor: "blue", fillOpacity: 1}).addTo(map).bindPopup("Här är vi");});
 </script>
+  
 </body>
 </html>
