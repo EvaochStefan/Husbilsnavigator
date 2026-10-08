@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Husbilsnavigator - Karta</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+body { font-family: Arial, sans-serif; margin: 12px; }
+#map { height: 65vh; min-height: 350px; }
+</style>
+</head>
+<body>
+<h2>Vår Husbilsnavigator</h2>
+<p>Resväg från Kiel till Andorra</p>
+<div id="map"></div>
+<p id="status">Laddar rutten...</p>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map = L.map("map").setView([48, 7], 5);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "&copy; OpenStreetMap"
+}).addTo(map);
+const url = "https://broken-tree-6c60.evaharaldsson54.workers.dev/";
+fetch(url, {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify({
+    start: "Kiel",
+    destination: "Andorra la Vella"
+  })
+})
+.then(r => {
+  if (!r.ok) throw new Error("Rutten kunde inte hämtas");
+  return r.json();
+})
+.then(data => {
+  const route = L.geoJSON(data).addTo(map);
+  map.fitBounds(route.getBounds());
+  document.getElementById("status").textContent =
+    "Rutten Kiel–Andorra visas på kartan.";
+})
+.catch(err => {
+  document.getElementById("status").textContent =
+    "Kunde inte visa rutten: " + err.message;
+});
+</script>
+</body>
+</html>
