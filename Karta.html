@@ -26,7 +26,7 @@ fetch(url, {
   method: "POST",
   headers: {"Content-Type": "application/json"},
   body: JSON.stringify({
-    start: new URLSearchParams(window.location.search).get("start") || "Hamburg",
+    start: new URLSearchParams(window.location.search).get("start") || "Kiel",
     destination: new URLSearchParams(window.location.search).get("destination") || "Andorra La Vella" 
   })
 })
